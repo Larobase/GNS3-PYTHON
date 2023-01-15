@@ -45,10 +45,6 @@ def network(r,v) :
     net=str(int(as1)+int(as2))+":"+str(100*min(int(name_r),int(name_voisin))+max(int(name_r),int(name_voisin)))+"::"+r["router_name"]
     return net
             
-            
-        
-    
-
 # Opening JSON file
 f = open('Input.json')
 
@@ -58,8 +54,9 @@ data = json.loads(f.read())
 
 # Iterating through the json
 # list
-with open(r"configfile.cfg", 'w') as configfile:
-    for i in data['router_details']:
+
+for i in data['router_details']:
+    with open(r"configfile"+i["router_name"]+".cfg", 'w') as configfile:
         configfile.write("------------------CECI EST LE ROUTEUR "+i["router_name"]+"----------------\n")
         loopback(i) #loopback
         interface(i) #gère les interfaces 
@@ -68,6 +65,6 @@ with open(r"configfile.cfg", 'w') as configfile:
     #address family ipv6
     #ip forward protocolnd
     #line con 0
-    
+        configfile.write("\n\n\n\n")
     # Closing file
 f.close()
