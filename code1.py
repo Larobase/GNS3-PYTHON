@@ -58,6 +58,25 @@ data = json.loads(f.read())
 for i in data['router_details']:
     with open(r"configfile"+i["router_name"]+".cfg", 'w') as configfile:
         configfile.write("------------------CECI EST LE ROUTEUR "+i["router_name"]+"----------------\n")
+        configfile.write("version 15.2\n"
+            "service timestamps debug datetime msec\n"
+            "service timestamps log datetime msec\n"
+            "!\n"
+            "hostname "+i["router_name"]+"\n"
+            "boot-start-marker\n"
+            "boot-end-marker\n"
+            "!\n"
+            "no aaa new-model\n"
+            "no ip icmp rate-limit unreachable\n"
+            "ip cef\n"
+            "!\n"
+            "no ip domain lookup\n"
+            "ipv6 unicast-routing\n"
+            "ipv6 cef\n"
+            "multilink bundle-name authenticated\n"
+            "!\n"
+            "ip tcp synwait-time 5\n"
+            "!\n" )
         loopback(i) #loopback
         interface(i) #gère les interfaces 
     #router bgp
